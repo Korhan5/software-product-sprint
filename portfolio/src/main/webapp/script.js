@@ -23,6 +23,6 @@ function addRandomShow() {
   const show = shows[Math.floor(Math.random() * shows.length)];
 
   // Add it to the page.
-  const showContainer = document.getElementById('Show-container');
+  const showContainer = document.getElementById('show-container');
   showContainer.innerText = show;
 }
