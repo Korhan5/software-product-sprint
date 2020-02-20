@@ -13,16 +13,16 @@
 // limitations under the License.
 
 /**
- * Adds a random greeting to the page.
+ * Adds one of my favorite shows.
  */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+function addRandomShow() {
+  const shows =
+      ['Naruto', 'Hunter x Hunter','How to Get Away with Murder', "Bob's Burgers", 'Chicago Pd', 'SuperStore'];
 
   // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+  const show = shows[Math.floor(Math.random() * shows.length)];
 
   // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+  const showContainer = document.getElementById('Show-container');
+  showContainer.innerText = show;
 }
