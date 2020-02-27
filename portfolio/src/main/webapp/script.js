@@ -26,3 +26,9 @@ function addRandomShow() {
   const showContainer = document.getElementById('show-container');
   showContainer.innerText = show;
 }
+
+async function getName() {
+  const response = await fetch('/data');
+  const quote = await response.text();
+  document.getElementById('hello-container').innerText = quote;
+}
