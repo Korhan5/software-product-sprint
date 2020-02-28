@@ -29,6 +29,27 @@ function addRandomShow() {
 
 async function getName() {
   const response = await fetch('/data');
-  const quote = await response.text();
-  document.getElementById('hello-container').innerText = quote;
+  const name = await response.text();
+  document.getElementById('hello-container').innerText = name;
+}
+function getDataStats() {
+  fetch('/data').then(response => response.json()).then((stats) => {
+    // stats is an object, not a string, so we have to
+    // reference its fields to create HTML content
+
+    const statsListElement = document.getElementById('data-stats-container');
+    statsListElement.innerHTML = '';
+    statsListElement.appendChild(
+        createListElement(stats));
+   
+  });
+  
+}
+
+/** Creates an <li> element containing text. */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  console.log(liElement);
+  return liElement;
 }
