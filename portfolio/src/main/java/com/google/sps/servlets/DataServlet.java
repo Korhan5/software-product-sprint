@@ -25,25 +25,19 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
      private ArrayList<String> comments = new ArrayList<String>(); 
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-      ArrayList<String> colleges = new ArrayList<String>() ;
-
-      colleges.add("MIT");
-      colleges.add("Harvard");
-      colleges.add("NYU");
-
-
-     Gson gson = new Gson();
-     String json = gson.toJson(colleges);     
-     response.setContentType("application/json;");
-     response.getWriter().println(json);
+    response.setContentType("application/json");
+    String json = new Gson().toJson(comments);
+    response.getWriter().println(json);
   }
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String text = request.getParameter("data-stats-container");
-    response.setContentType("data/html;");
-    response.getWriter().println(text);
+    String comment = request.getParameter("text-input");
+    comments.add(comment);
+    response.sendRedirect("/index.html");
+    
   }
 }

@@ -32,17 +32,23 @@ async function getName() {
   const name = await response.text();
   document.getElementById('hello-container').innerText = name;
 }
-async function getDataStats() {
+
+async function getCommentStats() {
   const response = await fetch('/data');
-  const colleges = await response.json();
-  const statsListElement = document.getElementById('data-stats-container');
-  statsListElement.innerHTML = '';
-  for(var i = 0; i < colleges.length; i++){
-      console.log(colleges[i]);
-      statsListElement.appendChild(createListElement(colleges[i]));
+  const comments = await response.json();
+  console.log(comments);
+  const statsListElement = document.getElementById('comment-stats-container');
+  const commentEl = document.getElementById('comments');
+const historyEl = document.getElementById('history');
+    console.log(historyEl + "history el");
+    for(var i = 0; i < comments.length; i++){
+      historyEl.appendChild(createListElement(comments[i]));
+    }
+    
 }
 
-}
+
+
 /** Creates an <li> element containing text. */
 function createListElement(text) {
   const liElement = document.createElement('li');
