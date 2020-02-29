@@ -23,8 +23,17 @@
       <br>
       <p>My linkedin is <a href="https://www.linkedin.com/in/korhan-citlak-44b345191/">Linkedin</a></p>
       <br> 
-     <button onclick="getDataStats()">Some cool colleges are ...</button>  
+      <button onclick="getDataStats()">Some cool colleges are ...</button>  
      <div id="data-stats-container"></div>
-    </div>
+     <br>
+      <ul id="history"></ul>
+      <h1 id="comments"></h1>
+      <form action="/data" method="POST">
+       <p>Enter a comment and you can separate comments with a comma:</p>
+       <textarea name="text-input">Enter comment here</textarea>
+       <br/><br/>
+       <input type="submit" />
+      </form>
+     </div> 
   </body>
 </html>

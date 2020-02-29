@@ -33,29 +33,15 @@ async function getName() {
   document.getElementById('hello-container').innerText = name;
 }
 async function getDataStats() {
-  /*fetch('/data').then(response => response.json()).then((stats) => {
-    // stats is an object, not a string, so we have to
-     //reference its fields to create HTML content
-    const statsListElement = document.getElementById('data-stats-container');
-    statsListElement.innerHTML = '';
-    statsListElement.appendChild(createListElement(stats));
-  }); */
   const response = await fetch('/data');
-  const colleges = await response.text();
+  const colleges = await response.json();
   const statsListElement = document.getElementById('data-stats-container');
   statsListElement.innerHTML = '';
-  var breakcollege = colleges[1];
-  //Breaks up each string in college to be printed as a <li> element
-  for(var i = 2; i < colleges.length; i++){
-      if(colleges[i] == ',' || (colleges[i] == ']')){    
-      console.log(breakcollege);
-      statsListElement.appendChild(createListElement(breakcollege));
-      breakcollege = "";
-      }else{
-          breakcollege += colleges[i];
-      }
-  }
-  //statsListElement.appendChild(createListElement(colleges));
+  for(var i = 0; i < colleges.length; i++){
+      console.log(colleges[i]);
+      statsListElement.appendChild(createListElement(colleges[i]));
+}
+
 }
 /** Creates an <li> element containing text. */
 function createListElement(text) {
