@@ -33,17 +33,13 @@ async function getName() {
   document.getElementById('hello-container').innerText = name;
 }
 
-async function getCommentStats() {
+async function getComment() {
   const response = await fetch('/data');
   const comments = await response.json();
-  console.log(comments);
-  //const statsListElement = document.getElementById('comment-stats-container');
-  //const commentEl = document.getElementById('comments');
   const historyEl = document.getElementById('history');
-  console.log(historyEl + "history el");
   for(var i = 0; i < comments.length; i++){
-        historyEl.appendChild(createListElement(comments[i]));
-    }
+    historyEl.appendChild(createListElement(comments[i]));
+  }
     
 }
 
@@ -53,6 +49,5 @@ async function getCommentStats() {
 function createListElement(text) {
   const liElement = document.createElement('li');
   liElement.innerText = text;
-  console.log(liElement);
   return liElement;
 }
