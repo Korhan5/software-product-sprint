@@ -23,8 +23,18 @@
       <br>
       <p>My linkedin is <a href="https://www.linkedin.com/in/korhan-citlak-44b345191/">Linkedin</a></p>
       <br> 
-     <button onclick="getName()">Hello...</button>  
-     <div id="hello-container"></div>
-    </div>
+      <p> Comments will go down here.</p>
+    
+     <br>
+      <ul id="history"></ul>
+     <body onload="getComment()">
+      <form action="/data" method="POST">
+       <p>Enter a comment:</p>
+       <textarea name="text-input">Enter comment here</textarea>
+       <br/><br/>
+       <input type="submit" />
+      </form>
+     </body>
+     </div> 
   </body>
 </html>

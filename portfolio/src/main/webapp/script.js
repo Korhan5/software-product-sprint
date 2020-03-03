@@ -29,6 +29,25 @@ function addRandomShow() {
 
 async function getName() {
   const response = await fetch('/data');
-  const quote = await response.text();
-  document.getElementById('hello-container').innerText = quote;
+  const name = await response.text();
+  document.getElementById('hello-container').innerText = name;
+}
+
+async function getComment() {
+  const response = await fetch('/data');
+  const comments = await response.json();
+  const historyEl = document.getElementById('history');
+  for(var i = 0; i < comments.length; i++){
+    historyEl.appendChild(createListElement(comments[i]));
+  }
+    
+}
+
+
+
+/** Creates an <li> element containing text. */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
 }
