@@ -29,19 +29,20 @@
       <br>
       <ul id="history"></ul>
 
-      <p> Hit the submit button below to sign in and to sign out! </p> 
+      <p> Hit the login button below to sign in and to sign out! When your signed in you will be able to see and leave comments! </p>
       <body onload="loginIn(); getComment();">
        <form action="/login" method="GET">
-        <input type="submit" />
+        <input type="submit" class ="login" value="Login" />
        </form>
       </body>
-
+       <div id="hideorshow">
       <form action="/data" method="POST">
        <p>Enter a comment:</p>
        <textarea name="text-input">Enter comment here</textarea>
        <br/><br/>
-       <input type="submit" />
+       <input type="submit" value="Comment"/>
       </form>
+      </div>
      </div> 
   </body>
 </html>

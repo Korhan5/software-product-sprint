@@ -34,14 +34,22 @@ async function getName() {
 }
 
 async function getComment() {
+  const visibility = document.getElementById("hideorshow");
+  const login = await fetch('/login');
+  const loginstatus = await login.text();
+  const loginName = loginstatus.split("<p");
+  if(loginName[0].includes("please sign in to leave a comment.")){
+      visibility.style.display = "none";
+  }else{
+   visibility.style.display = "block";
   const response = await fetch('/data');
   const comments = await response.json();
-  console.log(comments);
   const historyEl = document.getElementById('history');
   for(let i = 0; i < comments.length; i++){
     historyEl.appendChild(createListElement(comments[i]));
   }
-    
+  
+  }  
 }
 
 async function loginIn() {
