@@ -36,13 +36,21 @@ async function getName() {
 async function getComment() {
   const response = await fetch('/data');
   const comments = await response.json();
+  console.log(comments);
   const historyEl = document.getElementById('history');
-  for(var i = 0; i < comments.length; i++){
+  for(let i = 0; i < comments.length; i++){
     historyEl.appendChild(createListElement(comments[i]));
   }
     
 }
 
+async function loginIn() {
+  const response = await fetch('/login');
+  const user = await response.text();
+  const username = user.split("<p");
+  const infoEl = document.getElementById('logininfo');
+  infoEl.appendChild(createListElement(username[0])); 
+}
 
 
 /** Creates an <li> element containing text. */

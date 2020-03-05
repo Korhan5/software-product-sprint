@@ -23,18 +23,25 @@
       <br>
       <p>My linkedin is <a href="https://www.linkedin.com/in/korhan-citlak-44b345191/">Linkedin</a></p>
       <br> 
+      <p> Your login information is here </p>
+      <ul id="logininfo"></ul>
       <p> Comments will go down here.</p>
-    
-     <br>
+      <br>
       <ul id="history"></ul>
-     <body onload="getComment()">
+
+      <p> Hit the submit button below to sign in and to sign out! </p> 
+      <body onload="loginIn(); getComment();">
+       <form action="/login" method="GET">
+        <input type="submit" />
+       </form>
+      </body>
+
       <form action="/data" method="POST">
        <p>Enter a comment:</p>
        <textarea name="text-input">Enter comment here</textarea>
        <br/><br/>
        <input type="submit" />
       </form>
-     </body>
      </div> 
   </body>
 </html>
