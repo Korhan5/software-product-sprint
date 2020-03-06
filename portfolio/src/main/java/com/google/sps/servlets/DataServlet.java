@@ -20,6 +20,8 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import java.util.*; 
 import com.google.gson.Gson;
 import java.io.IOException;
@@ -36,12 +38,12 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     Query query = new Query("Comments").addSort("timestamp", SortDirection.DESCENDING);
+    query.addSort("username");
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
-   
     List<String> commentsStored = new ArrayList<String>();
     for (Entity entity : results.asIterable()) {
-      String comment = (String) entity.getProperty("comment");
+      String comment = (String) entity.getProperty("username") + " : " + (String) entity.getProperty("comment");
       commentsStored.add(comment);
     }
 
@@ -53,9 +55,15 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String comment = request.getParameter("text-input");
+     UserService userService = UserServiceFactory.getUserService();
+     Entity commentEntity = new Entity("Comments");
+     String username;
+    if (userService.isUserLoggedIn()){
+        username = userService.getCurrentUser().getEmail(); 
+        commentEntity.setProperty("username", username);  
+    } 
     comments.add(comment);
     long timestamp = System.currentTimeMillis();
-    Entity commentEntity = new Entity("Comments");
     commentEntity.setProperty("comment", comment);
     commentEntity.setProperty("timestamp", timestamp);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();

@@ -29,10 +29,15 @@
       <br>
       <ul id="history"></ul>
 
-      <p> Hit the login button below to sign in and to sign out! When your signed in you will be able to see and leave comments! </p>
+      <p> Hit the login button below to sign in and logout button to sign out! When your signed in you will be able to see and leave comments! </p>
       <body onload="loginIn(); getComment();">
        <form action="/login" method="GET">
+        <div id="hidelogin">
         <input type="submit" class ="login" value="Login" />
+        </div>
+        <div id="showlogout">
+        <input type="submit" class="logout" value="Logout"/>
+        </div>
        </form>
       </body>
        <div id="hideorshow">
