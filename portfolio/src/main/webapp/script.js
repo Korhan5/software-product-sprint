@@ -34,15 +34,39 @@ async function getName() {
 }
 
 async function getComment() {
-  const response = await fetch('/data');
-  const comments = await response.json();
-  const historyEl = document.getElementById('history');
-  for(var i = 0; i < comments.length; i++){
-    historyEl.appendChild(createListElement(comments[i]));
+  const visibility = document.getElementById("hideorshow");
+  const hidelogin = document.getElementById("hidelogin");
+  const showlogout = document.getElementById("showlogout");
+  const login = await fetch('/login');
+  const loginstatus = await login.text();
+  const loginName = loginstatus.split("<p");
+
+  if(loginName[0].includes("please sign in to leave a comment.")){
+      visibility.style.display = "none";
+      hidelogin.style.display = "block";
+      showlogout.style.display ="none";
+  }else{
+   showlogout.style.display= "block";
+   hidelogin.style.display= "none";
+   visibility.style.display = "block";
+   const response = await fetch('/data');
+   const comments = await response.json();
+   console.log(comments[0]["username"]);
+   const historyEl = document.getElementById('history');
+   for(let i = 0; i < comments.length; i++){
+      historyEl.appendChild(createListElement(comments[i]["username"] + " : " + comments[i]["text"]));
   }
-    
+  
+  }  
 }
 
+async function login() {
+  const response = await fetch('/login');
+  const user = await response.text();
+  const username = user.split("<p");
+  const infoEl = document.getElementById('logininfo');
+  infoEl.appendChild(createListElement(username[0])); 
+}
 
 
 /** Creates an <li> element containing text. */
