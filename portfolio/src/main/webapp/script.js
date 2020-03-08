@@ -40,6 +40,7 @@ async function getComment() {
   const login = await fetch('/login');
   const loginstatus = await login.text();
   const loginName = loginstatus.split("<p");
+
   if(loginName[0].includes("please sign in to leave a comment.")){
       visibility.style.display = "none";
       hidelogin.style.display = "block";
@@ -48,17 +49,18 @@ async function getComment() {
    showlogout.style.display= "block";
    hidelogin.style.display= "none";
    visibility.style.display = "block";
-  const response = await fetch('/data');
-  const comments = await response.json();
-  const historyEl = document.getElementById('history');
-  for(let i = 0; i < comments.length; i++){
-    historyEl.appendChild(createListElement(comments[i]));
+   const response = await fetch('/data');
+   const comments = await response.json();
+   console.log(comments[0]["username"]);
+   const historyEl = document.getElementById('history');
+   for(let i = 0; i < comments.length; i++){
+      historyEl.appendChild(createListElement(comments[i]["username"] + " : " + comments[i]["text"]));
   }
   
   }  
 }
 
-async function loginIn() {
+async function login() {
   const response = await fetch('/login');
   const user = await response.text();
   const username = user.split("<p");

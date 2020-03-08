@@ -37,38 +37,37 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("Comments").addSort("timestamp", SortDirection.DESCENDING);
-    query.addSort("username");
+    Query query = new Query("Comments").addSort("timestamp", SortDirection.DESCENDING).addSort("username");
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
-    List<String> commentsStored = new ArrayList<String>();
+    List<Comment> commentsStored = new ArrayList<Comment>();
+    Gson gson  = new Gson();
     for (Entity entity : results.asIterable()) {
-      String comment = (String) entity.getProperty("username") + " : " + (String) entity.getProperty("comment");
+      Comment comment = new Comment((String)entity.getProperty("username"), (String)entity.getProperty("comment"));
       commentsStored.add(comment);
     }
-
-    Gson gson = new Gson();
     response.setContentType("application/json;");
     response.getWriter().println(gson.toJson(commentsStored));
   }
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String comment = request.getParameter("text-input");
-     UserService userService = UserServiceFactory.getUserService();
-     Entity commentEntity = new Entity("Comments");
-     String username;
+    //String comment = request.getParameter("text-input");
+    UserService userService = UserServiceFactory.getUserService();
+    ///Entity commentEntity = new Entity("Comments"); 
     if (userService.isUserLoggedIn()){
-        username = userService.getCurrentUser().getEmail(); 
-        commentEntity.setProperty("username", username);  
-    } 
-    comments.add(comment);
-    long timestamp = System.currentTimeMillis();
-    commentEntity.setProperty("comment", comment);
-    commentEntity.setProperty("timestamp", timestamp);
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    datastore.put(commentEntity);
-    response.sendRedirect("/index.html");
-    
+        String comment = request.getParameter("text-input");
+        Entity commentEntity = new Entity("Comments");
+        commentEntity.setProperty("username", userService.getCurrentUser().getEmail());  
+        comments.add(comment);
+        long timestamp = System.currentTimeMillis();
+        commentEntity.setProperty("comment", comment);
+        commentEntity.setProperty("timestamp", timestamp);
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        datastore.put(commentEntity);
+        response.sendRedirect("/index.html");
+    }else{
+       response.sendError(HttpServletResponse.SC_NOT_FOUND);
+    }
   }
 }
